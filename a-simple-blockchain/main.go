@@ -196,18 +196,25 @@ func (bc *Blockchain) Iterator() *BlockchainIterator {
 type ProofOfWork struct {
 	block  *Block
 	target *big.Int
-	isWork bool
 }
 
 func (pow *ProofOfWork) Validate() bool {
-	return pow.isWork
+	var hashInt big.Int
+
+	data := pow.prepareData(pow.block.Nonce)
+	hash := sha256.Sum256(data)
+	hashInt.SetBytes(hash[:])
+
+	isValid := hashInt.Cmp(pow.target) == -1
+
+	return isValid
 }
 
 func NewProofOfWork(b *Block) *ProofOfWork {
 	target := big.NewInt(1)
 	target.Lsh(target, uint(256-targeBits))
 
-	pow := &ProofOfWork{b, target, false}
+	pow := &ProofOfWork{b, target}
 
 	return pow
 }
@@ -244,7 +251,6 @@ func (pow *ProofOfWork) Run() (int, []byte) {
 		hashInt.SetBytes(hash[:])
 
 		if hashInt.Cmp(pow.target) == -1 {
-			pow.isWork = true
 			break
 		} else {
 			nonce++
