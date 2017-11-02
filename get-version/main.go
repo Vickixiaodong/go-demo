@@ -2,8 +2,8 @@ package main
 
 import (
 	"fmt"
-	"runtime"
 	"os"
+	"runtime"
 )
 
 func main() {
@@ -20,4 +20,4 @@ Go Version: go1.9
 Operating System: darwin
 GOPATH=/Users/xiexiaodong/Documents/vagrant/dev-tron/workspace
 GOROOT=/usr/local/go
- */
+*/
