@@ -51,10 +51,6 @@ func (pow *ProofOfWork) prepareData(nonce int) []byte {
 	return data
 }
 
-func IntToHex(i int64) []byte {
-	return []byte(fmt.Sprintf("%x", i))
-}
-
 func (pow *ProofOfWork) Run() (int, []byte) {
 	var hashInt big.Int
 	var hash [32]byte
